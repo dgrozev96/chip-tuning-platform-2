@@ -117,17 +117,20 @@ export default function AuthForm() {
       <Link
         href="/api/auth/login/github"
         className={cn(buttonVariants({ variant: "outline" }))}
-        onClick={() => {
-          setIsGithubLoading(true);
-          signIn("github");
+        onClick={(e) => {
+          if (isLoading || isGithubLoading) {
+            e.preventDefault(); // Prevent navigation when loading
+          } else {
+            setIsGithubLoading(true);
+            signIn("github");
+          }
         }}
-        disabled={isLoading || isGithubLoading}
       >
         {isGithubLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
           <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}{" "}
+        )}
         Continue with <Icons.gitHub className="ml-2 h-4 w-4" />
       </Link>
     </div>
